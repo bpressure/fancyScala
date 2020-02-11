@@ -83,6 +83,7 @@ trait HarvesterPipeline {
 	  */
 	final def harvest(): Unit = measureJob("harvest") {
 		// somehow make processMetrics:Metric implicitly available in here
+		  val processMetrics: Metrics =  Metrics("namespace", thisClassSimpleName, "pipeline_execution", "127.0.0.1", Map())
 		val dailiesTimer: Gauge.Timer = processMetrics.startTimer("process_daily", "time needed to create and store the daily aggregation")
 		saveDaily(newDaily)
 		dailiesTimer.setDuration()
@@ -111,6 +112,7 @@ trait HarvesterPipeline {
 	  */
 	final def reHarvestDaily(): Unit = measureJob("reHarvestDaily") {
 		// somehow make processMetrics:Metric implicitly available in here
+		  val processMetrics: Metrics =  Metrics("namespace", thisClassSimpleName, "pipeline_execution", "127.0.0.1", Map())
 		val dailiesTimer: Gauge.Timer = processMetrics.startTimer("process_daily", "time needed to create and store the daily aggregation")
 		saveDaily(newDaily)
 		dailiesTimer.setDuration()
@@ -122,6 +124,7 @@ trait HarvesterPipeline {
 	final def reHarvestMaster(): Unit = measureJob("reHarvestMaster") {
 		// somehow make processMetrics:Metric implicitly available in here
 
+		  val processMetrics: Metrics =  Metrics("namespace", thisClassSimpleName, "pipeline_execution", "127.0.0.1", Map())
 		val dailiesTimer: Gauge.Timer = processMetrics.startTimer("read_dailies", "time needed to digest the dailies table")
 		val dailies = readDailies
 		dailiesTimer.setDuration()

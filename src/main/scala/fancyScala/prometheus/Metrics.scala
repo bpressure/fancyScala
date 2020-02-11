@@ -38,7 +38,7 @@ class Metrics(val registry: CollectorRegistry,
 	  * randomInteger().toDouble / 1000
 	  * }
 	  */
-	def set(name: String, help: String = ""): Double => Unit = set(name, _, help)
+	def set(name: String, help: String): Double => Unit = set(name, _, help)
 
 	/**
 	  * Set the gauge to the current unixtime.
@@ -69,18 +69,7 @@ class Metrics(val registry: CollectorRegistry,
 
 	def setToTime(name: String): Runnable => Double = setToTime(name, _)
 
-	/**
-	  * Executes callable code (e.g. a Java 8 Lambda) and observes a duration of how long it took to run.
-	  *
-	  * @return Result returned by callable.
-	  */
-	def setToTime[E](name: String, timeable: Callable[E], help: String): E = getMetric(name, help).setToTime(timeable)
 
-	def setToTime[E](name: String, timeable: Callable[E]): E = setToTime(name, timeable, "")
-
-	def setToTime[E](name: String, help: String): Callable[E] => E = setToTime(name, _, help)
-
-	def setToTime[E](name: String): Callable[E] => E = setToTime(name, _)
 }
 
 object Metrics {
